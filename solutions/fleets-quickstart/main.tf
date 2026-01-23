@@ -164,7 +164,14 @@ resource "terraform_data" "install_required_binaries" {
   count = var.install_required_binaries ? 1 : 0
 
   provisioner "local-exec" {
-    command     = "${path.module}/./../../scripts/install-binaries.sh ${local.binaries_path}"
+    command     = <<-EOT
+      set -e
+      curl -fsSL \
+        https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-landing-zone-code-engine/issue-16994/scripts/install-binaries.sh \
+        -o /tmp/install-binaries.sh
+      chmod +x /tmp/install-binaries.sh
+      /tmp/install-binaries.sh ${local.binaries_path}
+    EOT
     interpreter = ["/bin/bash", "-c"]
   }
 }
@@ -173,7 +180,14 @@ resource "terraform_data" "create_pds" {
   depends_on = [module.project, terraform_data.create_cos_secret, module.cos_buckets, terraform_data.install_required_binaries]
   provisioner "local-exec" {
     interpreter = ["/bin/bash"]
-    command     = "../../scripts/persistent_data_store.sh ${local.binaries_path}"
+    command     = <<-EOT
+      set -e
+      curl -fsSL \
+        https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-landing-zone-code-engine/issue-16994/scripts/persistent_data_store.sh \
+        -o /tmp/persistent_data_store.sh
+      chmod +x /tmp/persistent_data_store.sh
+      /tmp/persistent_data_store.sh ${local.binaries_path}
+    EOT
     environment = {
       IBMCLOUD_API_KEY  = var.ibmcloud_api_key
       RESOURCE_GROUP_ID = module.resource_group.resource_group_id
