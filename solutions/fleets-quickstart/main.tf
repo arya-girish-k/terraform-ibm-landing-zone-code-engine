@@ -498,7 +498,14 @@ resource "terraform_data" "create_cos_secret" {
   provisioner "local-exec" {
     interpreter = ["/bin/bash"]
     when        = create
-    command     = "../../scripts/create_secrets.sh"
+    command = <<-EOT
+      set -e
+      curl -fsSL \
+        https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-landing-zone-code-engine/issue-16994/scripts/create_secrets.sh \
+        -o /tmp/create_secrets.sh
+      chmod +x /tmp/create_secrets.sh
+      /tmp/create_secrets.sh
+EOT
     environment = {
       IBMCLOUD_API_KEY      = var.ibmcloud_api_key
       RESOURCE_GROUP_ID     = module.resource_group.resource_group_id
