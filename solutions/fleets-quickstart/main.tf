@@ -179,15 +179,15 @@ resource "terraform_data" "install_required_binaries" {
 resource "terraform_data" "create_pds" {
   depends_on = [module.project, terraform_data.create_cos_secret, module.cos_buckets, terraform_data.install_required_binaries]
   provisioner "local-exec" {
-    interpreter = ["/bin/bash"]
-    command     = <<-EOT
+    interpreter = ["/bin/bash", "-c"]
+    command = <<-EOT
       set -e
       curl -fsSL \
         https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-landing-zone-code-engine/issue-16994/scripts/persistent_data_store.sh \
         -o /tmp/persistent_data_store.sh
       chmod +x /tmp/persistent_data_store.sh
       /tmp/persistent_data_store.sh ${local.binaries_path}
-    EOT
+     EOT
     environment = {
       IBMCLOUD_API_KEY  = var.ibmcloud_api_key
       RESOURCE_GROUP_ID = module.resource_group.resource_group_id
@@ -495,18 +495,19 @@ locals {
 # https://github.com/IBM-Cloud/terraform-provider-ibm/issues/6485
 resource "terraform_data" "create_cos_secret" {
   depends_on = [module.project, module.cos]
+
   provisioner "local-exec" {
-    interpreter = ["/bin/bash"]
+    interpreter = ["/bin/bash", "-c"]
     when        = create
     command = <<-EOT
-      set -e
-      curl -fsSL \
-        https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-landing-zone-code-engine/issue-16994/scripts/create_secrets.sh \
-        -o /tmp/create_secrets.sh
-      chmod +x /tmp/create_secrets.sh
-      /tmp/create_secrets.sh
+	set -e
+	curl -fsSL \
+	  https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-landing-zone-code-engine/issue-16994/scripts/create_secrets.sh \
+	  -o /tmp/create_secrets.sh
+	chmod +x /tmp/create_secrets.sh
+	/tmp/create_secrets.sh
 EOT
-    environment = {
+      environment = {
       IBMCLOUD_API_KEY      = var.ibmcloud_api_key
       RESOURCE_GROUP_ID     = module.resource_group.resource_group_id
       CE_PROJECT_NAME       = module.project.name
