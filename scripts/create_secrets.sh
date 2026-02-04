@@ -4,7 +4,7 @@ set -euo pipefail
 # max wait time = 10 × 10s = 100 seconds
 MAX_RETRIES=10
 RETRY_INTERVAL=10  # seconds
-
+export PATH=$PATH:${1:-"/tmp"}
 # Check env variables
 function check_env_variables() {
     if [[ -z "${IBMCLOUD_API_KEY}" ]]; then

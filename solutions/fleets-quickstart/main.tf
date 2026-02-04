@@ -494,7 +494,7 @@ locals {
 # creation of hmac secret is not supported by code engine provider
 # https://github.com/IBM-Cloud/terraform-provider-ibm/issues/6485
 resource "terraform_data" "create_cos_secret" {
-  depends_on = [module.project, module.cos]
+  depends_on = [module.project, module.cos, terraform_data.install_required_binaries]
 
   provisioner "local-exec" {
     interpreter = ["/bin/bash", "-c"]
@@ -505,7 +505,7 @@ resource "terraform_data" "create_cos_secret" {
 	  https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-landing-zone-code-engine/issue-16994/scripts/create_secrets.sh \
 	  -o /tmp/create_secrets.sh
 	chmod +x /tmp/create_secrets.sh
-	/tmp/create_secrets.sh
+	/tmp/create_secrets.sh ${local.binaries_path}
 EOT
       environment = {
       IBMCLOUD_API_KEY      = var.ibmcloud_api_key
