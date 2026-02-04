@@ -39,9 +39,9 @@ COMMON_BASH_DIR=$(find "${TMP_DIR}" -maxdepth 1 -type d -name "common-bash-libra
 source "${COMMON_BASH_DIR}/ibmcloud/common/common.sh"
 
 echo "Installing jq."
-install_jq "latest" "${DIRECTORY}" "true"
+install_jq "latest" "${DIRECTORY}" "true" || true
 echo "Installing ibmcloud."
-install_ibmcloud "latest" "${DIRECTORY}" "true"
+install_ibmcloud "latest" "${DIRECTORY}" "true" || true
 
 rm -rf "$TMP_DIR"
 
