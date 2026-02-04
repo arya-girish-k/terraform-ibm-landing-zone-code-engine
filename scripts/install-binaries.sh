@@ -4,7 +4,6 @@
 # scripts placed in the root module when they are invoked individually.
 # Placing it here also avoids duplicating the install-binaries script across modules.
 
-set -o errexit
 set -o pipefail
 
 DIRECTORY=${1:-"/tmp"}
