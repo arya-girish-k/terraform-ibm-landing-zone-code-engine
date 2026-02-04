@@ -167,7 +167,7 @@ resource "terraform_data" "install_required_binaries" {
     command     = <<-EOT
       set -e
       curl -fsSL \
-        https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-landing-zone-code-engine/issue-16994/scripts/install-binaries.sh \
+        https://raw.githubusercontent.com/arya-girish-k/terraform-ibm-landing-zone-code-engine/issue-16994/scripts/install-binaries.sh \
         -o /tmp/install-binaries.sh
       chmod +x /tmp/install-binaries.sh
       /tmp/install-binaries.sh ${local.binaries_path}
@@ -183,7 +183,7 @@ resource "terraform_data" "create_pds" {
     command = <<-EOT
       set -e
       curl -fsSL \
-        https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-landing-zone-code-engine/issue-16994/scripts/persistent_data_store.sh \
+        https://raw.githubusercontent.com/arya-girish-k/terraform-ibm-landing-zone-code-engine/issue-16994/scripts/persistent_data_store.sh \
         -o /tmp/persistent_data_store.sh
       chmod +x /tmp/persistent_data_store.sh
       /tmp/persistent_data_store.sh ${local.binaries_path}
@@ -502,7 +502,7 @@ resource "terraform_data" "create_cos_secret" {
     command = <<-EOT
 	set -e
 	curl -fsSL \
-	  https://raw.githubusercontent.com/terraform-ibm-modules/terraform-ibm-landing-zone-code-engine/issue-16994/scripts/create_secrets.sh \
+	  https://raw.githubusercontent.com/arya-girish-k/terraform-ibm-landing-zone-code-engine/issue-16994/scripts/create_secrets.sh \
 	  -o /tmp/create_secrets.sh
 	chmod +x /tmp/create_secrets.sh
 	/tmp/create_secrets.sh ${local.binaries_path}
