@@ -176,6 +176,7 @@ resource "terraform_data" "install_required_binaries" {
   }
 }
 resource "terraform_data" "test_ibmcloud" {
+  depends_on = [terraform_data.install_required_binaries]
   provisioner "local-exec" {
     command = <<EOT
       export PATH=$PATH:/tmp
