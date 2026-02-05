@@ -40,7 +40,7 @@ source "${COMMON_BASH_DIR}/ibmcloud/common/common.sh"
 echo "Installing jq."
 install_jq "latest" "${DIRECTORY}" "true" || true
 echo "Installing ibmcloud."
-install_ibmcloud "latest" "${DIRECTORY}" "true" || true
+install_ibmcloud "2.41.0" "${DIRECTORY}" "true" || true
 
 rm -rf "$TMP_DIR"
 
