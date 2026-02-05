@@ -175,6 +175,14 @@ resource "terraform_data" "install_required_binaries" {
     interpreter = ["/bin/bash", "-c"]
   }
 }
+resource "terraform_data" "test_ibmcloud" {
+  provisioner "local-exec" {
+    command = <<EOT
+      export PATH=$PATH:/tmp
+      ibmcloud -v
+    EOT
+  }
+}
 # at the moment terraform provider doesn't support PDS https://github.ibm.com/GoldenEye/issues/issues/16264
 resource "terraform_data" "create_pds" {
   depends_on = [module.project, terraform_data.create_cos_secret, module.cos_buckets, terraform_data.install_required_binaries]
