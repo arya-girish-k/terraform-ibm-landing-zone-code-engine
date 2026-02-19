@@ -37,7 +37,7 @@ rm -f "${TMP_DIR}/common-bash.tar.gz"
 COMMON_BASH_DIR=$(find "${TMP_DIR}" -maxdepth 1 -type d -name "common-bash-library-*")
 source "${COMMON_BASH_DIR}/common/common.sh"
 source "${COMMON_BASH_DIR}/ibmcloud/cli.sh"
-source "${COMMON_BASH_DIR}/ibmcloud/plugin.sh"
+
 
 echo "Installing jq."
 install_jq "latest" "${DIRECTORY}" "true" || true
