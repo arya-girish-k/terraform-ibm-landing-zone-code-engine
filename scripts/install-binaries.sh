@@ -26,7 +26,7 @@ curl --silent \
     --show-error \
     --location \
     --output "${TMP_DIR}/common-bash.tar.gz" \
-    "https://github.com/terraform-ibm-modules/common-bash-library/archive/refs/heads/issue-17345.tar.gz"
+    "https://github.com/terraform-ibm-modules/common-bash-library/archive/refs/heads/issue-17636.tar.gz"
 
 mkdir -p "${TMP_DIR}/common-bash-library"
 tar -xzf "${TMP_DIR}/common-bash.tar.gz" -C "${TMP_DIR}"
@@ -37,11 +37,14 @@ rm -f "${TMP_DIR}/common-bash.tar.gz"
 COMMON_BASH_DIR=$(find "${TMP_DIR}" -maxdepth 1 -type d -name "common-bash-library-*")
 source "${COMMON_BASH_DIR}/common/common.sh"
 source "${COMMON_BASH_DIR}/ibmcloud/cli.sh"
+source "${COMMON_BASH_DIR}/ibmcloud/plugin.sh"
 
 echo "Installing jq."
 install_jq "latest" "${DIRECTORY}" "true" || true
 echo "Installing ibmcloud."
 install_ibmcloud "latest" "${DIRECTORY}" "true" || true
+echo "Installing ibmcloud code engine plugin."
+install_ibmcloud_plugin "code-engine" "latest" "${DIRECTORY}" "true" || true
 
 rm -rf "$TMP_DIR"
 

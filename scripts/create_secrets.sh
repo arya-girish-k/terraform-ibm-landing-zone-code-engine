@@ -65,13 +65,6 @@ check_env_variables
 # ibm cloud login
 ibmcloud_login
 
-
-# Install Code Engine plugin if missing
-if ! ibmcloud plugin list | grep -q code-engine; then
-  echo "Installing IBM Cloud Code Engine plugin..."
-  ibmcloud plugin install code-engine -f
-fi
-
 # select the right code engine project
 ibmcloud ce project select -n "${CE_PROJECT_NAME}"
 
