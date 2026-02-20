@@ -7,6 +7,7 @@ RETRY_INTERVAL=10  # seconds
 
 # The binaries downloaded by the install-binaries script are located in the /tmp directory.
 export PATH=$PATH:${1:-"/tmp"}
+export IBMCLOUD_HOME=${1:-"/tmp"}
 
 # Check env variables
 function check_env_variables() {
