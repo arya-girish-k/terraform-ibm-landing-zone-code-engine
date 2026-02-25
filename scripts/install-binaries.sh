@@ -45,7 +45,7 @@ install_ibmcloud "latest" "${DIRECTORY}" "true" || true
 echo "Installing ibmcloud code engine plugin."
 
 
-install_ibmcloud_plugin "code-engine" "${DIRECTORY}" "true" || true
+install_ibmcloud_plugins "code-engine" "${DIRECTORY}" "true" || true
 
 rm -rf "$TMP_DIR"
 
